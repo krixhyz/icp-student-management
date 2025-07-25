@@ -48,7 +48,8 @@ class AttendanceController extends Controller
             ['present' => true]
         );
     }
-
+    //toastr()->success('All students marked present successfully!');
+    // Redirect to the attendance index with a success message
     return redirect()->route('attendances.index')->with('success', "All students marked present for $date.");
 }
 

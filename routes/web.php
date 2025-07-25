@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-// Route::get('/', [UserController::class, 'index'])->name('home');
+Route::get('/register/verification/{token}', [AuthController::class, 'verification'])->name('register.verification');
 
 
 
@@ -33,9 +33,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.show');
 Route::post('/register', [AuthController::class, 'register'])->name('register.store');
 
-// Login
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.show');
-Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
+
+Route::prefix('/login')
+    ->as('login.')
+    ->controller(AuthController::class)->group(function () {
+        Route::get('/verification/{token}', 'verification')->name('verification');
+        Route::get('/', 'showLoginForm')->name('show');
+        Route::post('/', 'login')->name('attempt');
+    });
+
+
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

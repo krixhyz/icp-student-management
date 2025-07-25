@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
-
+         toastr()->success('User created successfully!');
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -53,13 +53,14 @@ class UserController extends Controller
         ]);
 
         $user->update($request->only('name', 'email', 'role'));
-
+         toastr()->success('User updated successfully!');
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
+         toastr()->error('User deleted successfully!');
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
